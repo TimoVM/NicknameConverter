@@ -5,7 +5,7 @@ function loadJSONFromURL(url) {
     return JSON.parse(request.responseText);
 }
 
-function initiateMailAssembly(nextByteCombinations) {
+function initiateNicknameAssembly(nextByteCombinations) {
     var minPossibilities = {};
     var startingChar = "80";
     nextByteCombinations.forEach(nextByteCombination => {
@@ -17,14 +17,14 @@ function initiateMailAssembly(nextByteCombinations) {
     return Object.values(minPossibilities)
 }
 
-function iterateMailAssembly(nextByteCombinations, possibleMailList) {
+function iterateNicknameAssembly(nextByteCombinations, possibleNicknameList) {
     var minPossibilities = {};
-    possibleMailList.forEach(mailData => {
-        var startingChar = mailData[0].slice(-1);
+    possibleNicknameList.forEach(nicknameData => {
+        var startingChar = nicknameData[0].slice(-1);
         nextByteCombinations.forEach(nextByteCombination => {
-            var linkCost = mailData[1] + distanceDict[startingChar + nextByteCombination[0]] + distanceDict[nextByteCombination[0] + nextByteCombination[1]] + 2;
+            var linkCost = nicknameData[1] + distanceDict[startingChar + nextByteCombination[0]] + distanceDict[nextByteCombination[0] + nextByteCombination[1]] + 2;
             if ((!isNaN(linkCost)) && (!(nextByteCombination[1] in minPossibilities) || ((nextByteCombination[1] in minPossibilities) && (linkCost < minPossibilities[nextByteCombination[1]][1])))) {
-                minPossibilities[nextByteCombination[1]] = [mailData[0].concat(nextByteCombination), linkCost]
+                minPossibilities[nextByteCombination[1]] = [nicknameData[0].concat(nextByteCombination), linkCost]
             };
         });
     });
@@ -50,36 +50,36 @@ function ConvertChecksumToCoordinates(checksum) {
     return [highCoordinate, lowCoordinate]
 }
 
-function HookOutput(finalMailArray, language) {
+function HookOutput(finalNicknameArray, language) {
     if (language != "German") {
         language = ""
     }
     var element = document.getElementById("Output");
     element.innerHTML = ""
-    finalMailArray.forEach((finalMail, idx) => {
+    finalNicknameArray.forEach((finalNickname, idx) => {
         var tag = document.createElement("h1");
         var text = document.createTextNode("Mail " + (idx + 1).toString());
         var tag2 = document.createElement("p");
-        var text2 = document.createTextNode("Button presses required: " + finalMail[2].toString() + " | checksum: ");
+        var text2 = document.createTextNode("Button presses required: " + finalNickname[2].toString() + " | checksum: ");
         element.appendChild(tag);
         tag.appendChild(text);
         element.appendChild(tag2);
         tag2.appendChild(text2);
-        var checksumCoordinates = ConvertChecksumToCoordinates(finalMail[1])
+        var checksumCoordinates = ConvertChecksumToCoordinates(finalNickname[1])
         var checksumSpan = document.createElement("span")
-        checksumSpan.setAttribute("class", "gscfont")
+        checksumSpan.setAttribute("class", "rbyfont")
         checksumSpan.setAttribute("style", "background: url(/NicknameConverter/CharSets/Characterset_"+language+".png) -" + checksumCoordinates[0][0] + "px -" + checksumCoordinates[0][1] + "px;")
         tag2.appendChild(checksumSpan);
         var checksumSpan = document.createElement("span")
-        checksumSpan.setAttribute("class", "gscfont")
+        checksumSpan.setAttribute("class", "rbyfont")
         checksumSpan.setAttribute("style", "background: url(/NicknameConverter/CharSets/Characterset_"+language+".png) -" + checksumCoordinates[1][0] + "px -" + checksumCoordinates[1][1] + "px;")
         tag2.appendChild(checksumSpan);
         var pTag = document.createElement("p")
-        pTag.setAttribute("class", finalMail[0])
+        pTag.setAttribute("class", finalNickname[0])
         tag2.appendChild(pTag);
-        (finalMail[0]).forEach(value => {
+        (finalNickname[0]).forEach(value => {
             var childSpan = document.createElement("span")
-            childSpan.setAttribute("class", "gscfont")
+            childSpan.setAttribute("class", "rbyfont")
             var coordinates = ConvertValueToCoordinates(value)
             childSpan.setAttribute("style", "background: url(/NicknameConverter/CharSets/Characterset_"+language+".png) -" + coordinates[0] + "px -" + coordinates[1] + "px;")
             pTag.appendChild(childSpan);
@@ -105,33 +105,33 @@ function convertCodes() {
         input = input.padEnd(input.length + (10 - input.length % 10), "0")
     }
     console.log(input)
-    var finalMailArray = []
+    var finalNicknameArray = []
     for (let index = 0; index < input.length; index += 10) {
-        var assembledMail = []
+        var assembledNickname = []
         var checksum = 128
-        var mailCode = input.slice(index, index + 10)
+        var nicknameCode = input.slice(index, index + 10)
         for (let byteIndex = 0; byteIndex < 10; byteIndex += 2) {
-            var byteString = mailCode.slice(byteIndex, byteIndex + 2)
+            var byteString = nicknameCode.slice(byteIndex, byteIndex + 2)
             checksum += parseInt(byteString, 16)
             if (byteIndex == 0) {
-                assembledMail = initiateMailAssembly(combinedDict[byteString])
+                assembledNickname = initiateNicknameAssembly(combinedDict[byteString])
             } else {
-                assembledMail = iterateMailAssembly(combinedDict[byteString], assembledMail)
+                assembledNickname = iterateNicknameAssembly(combinedDict[byteString], assembledNickname)
             }
         }
 
-        var minLinkCost = assembledMail[0][1]
-        var finalMail = assembledMail[0][0]
-        for (let i = 0; i < assembledMail.length; i++) {
-            if (assembledMail[i][1] < minLinkCost) {
-                minLinkCost = assembledMail[i][1]
-                finalMail = assembledMail[i][0]
+        var minLinkCost = assembledNickname[0][1]
+        var finalNickname = assembledNickname[0][0]
+        for (let i = 0; i < assembledNickname.length; i++) {
+            if (assembledNickname[i][1] < minLinkCost) {
+                minLinkCost = assembledNickname[i][1]
+                finalNickname = assembledNickname[i][0]
             }
         }
-        finalMailArray.push([finalMail, checksum % 256, minLinkCost])
+        finalNicknameArray.push([finalNickname, checksum % 256, minLinkCost])
     }
-    finalMailArray.forEach(finalMail => {
+    finalNicknameArray.forEach(finalMail => {
         console.log(finalMail[0])
     });
-    HookOutput(finalMailArray, language)
+    HookOutput(finalNicknameArray, language)
 }
