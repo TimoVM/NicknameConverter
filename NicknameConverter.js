@@ -68,11 +68,11 @@ function HookOutput(finalMailArray, language) {
         var checksumCoordinates = ConvertChecksumToCoordinates(finalMail[1])
         var checksumSpan = document.createElement("span")
         checksumSpan.setAttribute("class", "gscfont")
-        checksumSpan.setAttribute("style", "background: url(/MailConverter/CharSets/Characterset_"+language+".png) -" + checksumCoordinates[0][0] + "px -" + checksumCoordinates[0][1] + "px;")
+        checksumSpan.setAttribute("style", "background: url(/NicknameConverter/CharSets/Characterset_"+language+".png) -" + checksumCoordinates[0][0] + "px -" + checksumCoordinates[0][1] + "px;")
         tag2.appendChild(checksumSpan);
         var checksumSpan = document.createElement("span")
         checksumSpan.setAttribute("class", "gscfont")
-        checksumSpan.setAttribute("style", "background: url(/MailConverter/CharSets/Characterset_"+language+".png) -" + checksumCoordinates[1][0] + "px -" + checksumCoordinates[1][1] + "px;")
+        checksumSpan.setAttribute("style", "background: url(/NicknameConverter/CharSets/Characterset_"+language+".png) -" + checksumCoordinates[1][0] + "px -" + checksumCoordinates[1][1] + "px;")
         tag2.appendChild(checksumSpan);
         var pTag = document.createElement("p")
         pTag.setAttribute("class", finalMail[0])
@@ -81,7 +81,7 @@ function HookOutput(finalMailArray, language) {
             var childSpan = document.createElement("span")
             childSpan.setAttribute("class", "gscfont")
             var coordinates = ConvertValueToCoordinates(value)
-            childSpan.setAttribute("style", "background: url(/MailConverter/CharSets/Characterset_"+language+".png) -" + coordinates[0] + "px -" + coordinates[1] + "px;")
+            childSpan.setAttribute("style", "background: url(/NicknameConverter/CharSets/Characterset_"+language+".png) -" + coordinates[0] + "px -" + coordinates[1] + "px;")
             pTag.appendChild(childSpan);
             });
     });
@@ -90,11 +90,11 @@ function HookOutput(finalMailArray, language) {
 function convertCodes() {
     var language = document.getElementById("language").value
     if (language == "German"){
-        combinedDict = loadJSONFromURL('./Dictionaries/MailConvCombinedDict.json')
-        distanceDict = loadJSONFromURL('./Dictionaries/MailConvDistanceDict.json')
+        combinedDict = loadJSONFromURL('./Dictionaries/NicknameConvCombinedDict.json')
+        distanceDict = loadJSONFromURL('./Dictionaries/NicknameConvDistanceDict.json')
     } else {
-        combinedDict = loadJSONFromURL('./Dictionaries/MailConvCombinedDictGerman.json')
-        distanceDict = loadJSONFromURL('./Dictionaries/MailConvDistanceDictGerman.json')
+        combinedDict = loadJSONFromURL('./Dictionaries/NicknameConvCombinedDictGerman.json')
+        distanceDict = loadJSONFromURL('./Dictionaries/NicknameConvDistanceDictGerman.json')
     }   
     var textBox = document.getElementById("Input")
     var input = textBox.value
