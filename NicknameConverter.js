@@ -90,11 +90,11 @@ function HookOutput(finalMailArray, language) {
 function convertCodes() {
     var language = document.getElementById("language").value
     if (language == "German"){
-        combinedDict = loadJSONFromURL('./Dictionaries/NickConvCombinedDict.json')
-        distanceDict = loadJSONFromURL('./Dictionaries/NickConvDistanceDict.json')
-    } else {
         combinedDict = loadJSONFromURL('./Dictionaries/NickConvCombinedDictGerman.json')
         distanceDict = loadJSONFromURL('./Dictionaries/NickConvDistanceDictGerman.json')
+    } else {
+        combinedDict = loadJSONFromURL('./Dictionaries/NickConvCombinedDict.json')
+        distanceDict = loadJSONFromURL('./Dictionaries/NickConvDistanceDict.json')
     }   
     var textBox = document.getElementById("Input")
     var input = textBox.value
