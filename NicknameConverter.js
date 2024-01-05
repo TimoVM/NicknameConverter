@@ -58,7 +58,7 @@ function HookOutput(finalNicknameArray, language) {
     element.innerHTML = ""
     finalNicknameArray.forEach((finalNickname, idx) => {
         var tag = document.createElement("h1");
-        var text = document.createTextNode("Mail " + (idx + 1).toString());
+        var text = document.createTextNode("Nickname " + (idx + 1).toString());
         var tag2 = document.createElement("p");
         var text2 = document.createTextNode("Button presses required: " + finalNickname[2].toString() + " | checksum: ");
         element.appendChild(tag);
@@ -130,8 +130,8 @@ function convertCodes() {
         }
         finalNicknameArray.push([finalNickname, checksum % 256, minLinkCost])
     }
-    finalNicknameArray.forEach(finalMail => {
-        console.log(finalMail[0])
+    finalNicknameArray.forEach(finalNickname => {
+        console.log(finalNickname[0])
     });
     HookOutput(finalNicknameArray, language)
 }
