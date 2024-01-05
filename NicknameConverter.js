@@ -52,7 +52,7 @@ function ConvertChecksumToCoordinates(checksum) {
 
 function HookOutput(finalMailArray, language) {
     if (language != "German") {
-        language == ""
+        language = ""
     }
     var element = document.getElementById("Output");
     element.innerHTML = ""
