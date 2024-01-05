@@ -108,7 +108,7 @@ function convertCodes() {
     var finalMailArray = []
     for (let index = 0; index < input.length; index += 10) {
         var assembledMail = []
-        var checksum = 0
+        var checksum = 128
         var mailCode = input.slice(index, index + 10)
         for (let byteIndex = 0; byteIndex < 10; byteIndex += 2) {
             var byteString = mailCode.slice(byteIndex, byteIndex + 2)
