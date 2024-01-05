@@ -1,0 +1,24 @@
+body {
+    background-color: floralwhite;
+    color: black;
+    text-align: center;
+}
+
+.korgscfont {
+    width: 16px;
+    height: 32px;
+    display: inline-block;
+    background-size: 256px 512px !important;
+    image-rendering: pixelated;
+    margin-block-end: -5px;
+    text-align: center;
+}
+
+.gscfont {
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    background-size: 256px 256px !important;
+    image-rendering: pixelated;
+    margin-block-end: -5px;
+}
