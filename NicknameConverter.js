@@ -66,7 +66,7 @@ function HookOutput(finalNicknameArray, language) {
         var tag = document.createElement("h1");
         var text = document.createTextNode("Nickname " + (idx + 1).toString());
         var tag2 = document.createElement("p");
-        var text2 = document.createTextNode("Button presses required: " + finalNickname[2].toString() + " | old style checksum: ");
+        var text2 = document.createTextNode("Button presses required: " + finalNickname[2].toString() + " | Old style checksum: ");
         element.appendChild(tag);
         tag.appendChild(text);
         element.appendChild(tag2);
@@ -82,7 +82,7 @@ function HookOutput(finalNicknameArray, language) {
         checksumSpan.setAttribute("style", "background: url(/NicknameConverter/CharSets/Characterset_"+language+".png) -" + checksumCoordinates[1][0] + "px -" + checksumCoordinates[1][1] + "px;")
         tag2.appendChild(checksumSpan);
 
-        var text3 = document.createTextNode(" | new style checksum: ");
+        var text3 = document.createTextNode(" | New style checksum: ");
         tag2.appendChild(text3);
 
         var checksumCoordinatesV2 = ConvertChecksumToCoordinatesV2(finalNickname[1])
