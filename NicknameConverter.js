@@ -50,6 +50,12 @@ function ConvertChecksumToCoordinates(checksum) {
     return [highCoordinate, lowCoordinate]
 }
 
+function ConvertChecksumToCoordinatesV2(checksum) {
+    var lowCoordinate = ConvertValueToCoordinates(((((checksum % 16) + 0xF6)| 0x80)%256).toString(16))
+    var highCoordinate = ConvertValueToCoordinates(((((checksum - checksum % 16)/16 + 0xF6)|0x80)%256).toString(16))
+    return [highCoordinate, lowCoordinate]
+}
+
 function HookOutput(finalNicknameArray, language) {
     if (language != "German") {
         language = ""
@@ -60,11 +66,12 @@ function HookOutput(finalNicknameArray, language) {
         var tag = document.createElement("h1");
         var text = document.createTextNode("Nickname " + (idx + 1).toString());
         var tag2 = document.createElement("p");
-        var text2 = document.createTextNode("Button presses required: " + finalNickname[2].toString() + " | checksum: ");
+        var text2 = document.createTextNode("Button presses required: " + finalNickname[2].toString() + " | old style checksum: ");
         element.appendChild(tag);
         tag.appendChild(text);
         element.appendChild(tag2);
         tag2.appendChild(text2);
+
         var checksumCoordinates = ConvertChecksumToCoordinates(finalNickname[1])
         var checksumSpan = document.createElement("span")
         checksumSpan.setAttribute("class", "rbyfont")
@@ -73,6 +80,19 @@ function HookOutput(finalNicknameArray, language) {
         var checksumSpan = document.createElement("span")
         checksumSpan.setAttribute("class", "rbyfont")
         checksumSpan.setAttribute("style", "background: url(/NicknameConverter/CharSets/Characterset_"+language+".png) -" + checksumCoordinates[1][0] + "px -" + checksumCoordinates[1][1] + "px;")
+        tag2.appendChild(checksumSpan);
+
+        var text3 = document.createTextNode(" | new style checksum: ");
+        tag2.appendChild(text3);
+
+        var checksumCoordinatesV2 = ConvertChecksumToCoordinatesV2(finalNickname[1])
+        var checksumSpan = document.createElement("span")
+        checksumSpan.setAttribute("class", "rbyfont")
+        checksumSpan.setAttribute("style", "background: url(/NicknameConverter/CharSets/Characterset_"+language+".png) -" + checksumCoordinatesV2[0][0] + "px -" + checksumCoordinatesV2[0][1] + "px;")
+        tag2.appendChild(checksumSpan);
+        var checksumSpan = document.createElement("span")
+        checksumSpan.setAttribute("class", "rbyfont")
+        checksumSpan.setAttribute("style", "background: url(/NicknameConverter/CharSets/Characterset_"+language+".png) -" + checksumCoordinatesV2[1][0] + "px -" + checksumCoordinatesV2[1][1] + "px;")
         tag2.appendChild(checksumSpan);
         var pTag = document.createElement("p")
         pTag.setAttribute("class", finalNickname[0])
