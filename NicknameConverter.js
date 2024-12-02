@@ -72,7 +72,7 @@ function HookOutput(finalNicknameArray, language) {
         var tag = document.createElement("h1");
         var text = document.createTextNode("Nickname " + (idx + 1).toString());
         var tag2 = document.createElement("p");
-        var text2 = document.createTextNode("Button presses required: " + finalNickname[2].toString() + " | Checksum in text: " + finalNickname[1].toString(16).toUpperCase() + " | Checksum image: ");
+        var text2 = document.createTextNode("Button presses required: " + finalNickname[2].toString() + " | Checksum in text: " + finalNickname[1].toString(16).toUpperCase().padStart(2, '0') + " | Checksum image: ");
         element.appendChild(tag);
         tag.appendChild(text);
         element.appendChild(tag2);
