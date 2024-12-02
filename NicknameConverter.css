@@ -4,6 +4,10 @@ body {
     text-align: center;
 }
 
+ul {
+    display: inline-block;
+  }
+
 .rbyfont {
     width: 16px;
     height: 16px;
