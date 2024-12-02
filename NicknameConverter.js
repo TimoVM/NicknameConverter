@@ -44,6 +44,12 @@ function ConvertValueToCoordinates(value) {
     return [xCoordinate, yCoordinate]
 }
 
+function ConvertValueToText(value) {
+    textDict = loadJSONFromURL('./Dictionaries/NickConvTextDict.json');
+    var valueChar = textDict["0x" + value];
+    return [valueChar]
+}
+
 function ConvertChecksumToCoordinates(checksum) {
     var lowCoordinate = ConvertValueToCoordinates((((checksum % 16) + 0xF6)%256).toString(16))
     var highCoordinate = ConvertValueToCoordinates((((checksum - checksum % 16)/16 + 0xF6)%256).toString(16))
@@ -66,13 +72,13 @@ function HookOutput(finalNicknameArray, language) {
         var tag = document.createElement("h1");
         var text = document.createTextNode("Nickname " + (idx + 1).toString());
         var tag2 = document.createElement("p");
-        var text2 = document.createTextNode("Button presses required: " + finalNickname[2].toString() + " | Old style checksum: ");
+        var text2 = document.createTextNode("Button presses required: " + finalNickname[2].toString() + " | Checksum: ");
         element.appendChild(tag);
         tag.appendChild(text);
         element.appendChild(tag2);
         tag2.appendChild(text2);
 
-        var checksumCoordinates = ConvertChecksumToCoordinates(finalNickname[1])
+        var checksumCoordinates = ConvertChecksumToCoordinatesV2(finalNickname[1])
         var checksumSpan = document.createElement("span")
         checksumSpan.setAttribute("class", "rbyfont")
         checksumSpan.setAttribute("style", "background: url(/NicknameConverter/CharSets/Characterset_"+language+".png) -" + checksumCoordinates[0][0] + "px -" + checksumCoordinates[0][1] + "px;")
@@ -82,28 +88,23 @@ function HookOutput(finalNicknameArray, language) {
         checksumSpan.setAttribute("style", "background: url(/NicknameConverter/CharSets/Characterset_"+language+".png) -" + checksumCoordinates[1][0] + "px -" + checksumCoordinates[1][1] + "px;")
         tag2.appendChild(checksumSpan);
 
-        var text3 = document.createTextNode(" | New style checksum: ");
-        tag2.appendChild(text3);
-
-        var checksumCoordinatesV2 = ConvertChecksumToCoordinatesV2(finalNickname[1])
-        var checksumSpan = document.createElement("span")
-        checksumSpan.setAttribute("class", "rbyfont")
-        checksumSpan.setAttribute("style", "background: url(/NicknameConverter/CharSets/Characterset_"+language+".png) -" + checksumCoordinatesV2[0][0] + "px -" + checksumCoordinatesV2[0][1] + "px;")
-        tag2.appendChild(checksumSpan);
-        var checksumSpan = document.createElement("span")
-        checksumSpan.setAttribute("class", "rbyfont")
-        checksumSpan.setAttribute("style", "background: url(/NicknameConverter/CharSets/Characterset_"+language+".png) -" + checksumCoordinatesV2[1][0] + "px -" + checksumCoordinatesV2[1][1] + "px;")
-        tag2.appendChild(checksumSpan);
         var pTag = document.createElement("p")
         pTag.setAttribute("class", finalNickname[0])
         tag2.appendChild(pTag);
+        var textOutput = "";
         (finalNickname[0]).forEach(value => {
             var childSpan = document.createElement("span")
             childSpan.setAttribute("class", "rbyfont")
             var coordinates = ConvertValueToCoordinates(value)
+            textOutput += ConvertValueToText(value)
+            textOutput += " "
             childSpan.setAttribute("style", "background: url(/NicknameConverter/CharSets/Characterset_"+language+".png) -" + coordinates[0] + "px -" + coordinates[1] + "px;")
             pTag.appendChild(childSpan);
             });
+        var textSpan = document.createElement("p");
+        var textSpanText = document.createTextNode(textOutput);
+        element.appendChild(textSpan);
+        textSpan.appendChild(textSpanText);
     });
 }
 
